@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# exit on any errors
+set -e
+
+IMAGE="pmkr/profit-trailer"
+PROJECT_URL="https://github.com/taniman/profit-trailer"
+LATEST_RELEASE="$(curl -L -s -H 'Accept: application/json' $PROJECT_URL/releases/latest)"
+LATEST_VERSION="$(echo $LATEST_RELEASE | sed -e 's/.*\"tag_name":\"\([^\"]*\)\".*/\1/')"
+TAG="$(echo "$LATEST_VERSION" | sed -e 's/^v//')"
+
+image_request_code=$(curl \
+  -L \
+  --silent \
+  -o /dev/null \
+  -w "%{http_code}" \
+  -H "Accept: application/json" \
+  "https://hub.docker.com/v2/repositories/$IMAGE/tags/$TAG" \
+)
+
+if [ ! $image_request_code -eq 200 ]; then
+  docker build -t "$IMAGE:$TAG" --build-arg "PT_VERSION=$LATEST_VERSION" .
+  docker push "$IMAGE"
+fi

@@ -1,0 +1,28 @@
+#!/bin/sh
+
+files="application.properties configuration.properties"
+for file in $files; do
+  if [ -f "/config/$file" ]; then
+    ln -sf "/config/$file" "/ProfitTrailer/$file"
+  else
+    echo "$file not found in /config" 1>&2
+    exit 1
+  fi
+done
+
+if [ -d /config/trading ]; then
+  rm -r /ProfitTrailer/trading
+  ln -s /config/trading /ProfitTrailer/trading
+fi
+
+mkdir -p /data/logs /data/backup
+touch /data/logs/ProfitTrailer.log
+touch /data/ProfitTrailerData.json
+touch /data/ProfitTrailerData.json.backup
+
+files="ProfitTrailerData.json ProfitTrailer.json.backup logs backup"
+for file in $files; do
+  ln -sf "/data/$file" "/ProfitTrailer/$file"
+done
+
+pt
