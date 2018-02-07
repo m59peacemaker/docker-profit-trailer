@@ -21,6 +21,12 @@ pmkr/profit-trailer
 
 Mount the config directory containing `application.properties`, `configuration.properties`, and `trading` here.
 
+## ports
+
+### 8081
+
+The web server binds to port 8081.
+
 ## bin
 
 ### `pt`
