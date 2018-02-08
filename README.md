@@ -29,6 +29,10 @@ The web server binds to port 8081.
 
 ## bin
 
+### `startup` (default)
+
+This symlinks your config and data into the appropriate Profit Trailer directories and then starts Profit Trailer.
+
 ### `pt`
 
-starts Profit Trailer
+Just starts Profit Trailer. You should usually use `startup` instead.
