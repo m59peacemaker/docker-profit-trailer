@@ -6,7 +6,7 @@ WORKDIR /tmp
 
 RUN \
   PROJECT_URL="https://github.com/taniman/profit-trailer" && \
-  ARTIFACT_URL="$PROJECT_URL/releases/download/$PT_VERSION/ProfitTrailer.zip" && \
+  ARTIFACT_URL="$PROJECT_URL/releases/download/v$PT_VERSION/ProfitTrailer.zip" && \
   wget -O ProfitTrailer.zip $ARTIFACT_URL && \
   unzip ProfitTrailer.zip && \
   (cd ProfitTrailer; rm pm2-ProfitTrailer.json Run-ProfitTrailer.cmd) && \

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+. ./scripts/vars
+
+# github repo
+LATEST_RELEASE="$(curl -L -s -H "Accept: application/json" "https://github.com/$SOURCE/releases/latest")"
+LATEST_VERSION="$(echo $LATEST_RELEASE | sed -e 's/.*\"tag_name":\"v\([^\"]*\)\".*/\1/')"
+
+printf "$LATEST_VERSION"

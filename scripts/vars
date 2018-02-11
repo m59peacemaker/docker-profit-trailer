@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# GitHub or Dockerhub name/project of the source project you want to keep up-to-date-with
+SOURCE="taniman/profit-trailer"
+
+# Your GitHub name/project for this project
+REPO="m59peacemaker/docker-profit-trailer"
+
+# docker image name/project for local/dev builds
+IMAGE="pmkr/profit-trailer"

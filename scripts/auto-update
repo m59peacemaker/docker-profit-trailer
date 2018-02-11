@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# exit on any errors
+set -e
+
+. ./scripts/vars
+
+LATEST_VERSION="$(./scripts/latest-version)"
+
+git clone --no-checkout https://$GITHUB_TOKEN@github.com/$REPO.git dist
+cd dist
+(git checkout origin/dist || (git checkout --orphan dist && git rm -rf .))
+
+existing_tag="$(git tag -l "$LATEST_VERSION")"
+
+should_build="true"
+# don't build in cron job when there's already a build for this version
+if [ "$TRAVIS_EVENT_TYPE" = "cron" ] && [ ! -z "$existing_tag" ]; then
+  should_build="false"
+fi
+
+if [ "$should_build" = "true" ]; then
+  (cd ../; scripts/prepare-dist "$LATEST_VERSION")
+
+  git config user.email "travis@travis-ci.org"
+  git config user.name "Travis CI"
+
+  git add .
+  git commit -m "$LATEST_VERSION"
+  git tag -f -a "$LATEST_VERSION" -m "$LATEST_VERSION"
+
+  git push -f --follow-tags -u origin dist
+fi

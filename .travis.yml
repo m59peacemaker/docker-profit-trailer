@@ -1,9 +1,9 @@
+branches:
+  only:
+    - master
 language: bash
-
-sudo: required
-
-services:
-  - docker
-
 script:
-  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" && make build
+  - make auto-update
+env:
+  global:
+    secure: WVX7XT3cMKw8wfHJ0KNH5xVvYRTS5Fpwct6Qg3XdoMvzPoRvk84vPvlnXRFRax0ZJKVrZDWMlu2f6qI3S19QoZNyRIseyknLpc04SEKEbyl/2uc+pS7spbWB8qt+WHE+EUBu6GAn7uC9ABwLWX79bNHMBDsjS6TXUBpuEpzNyw1Nza6kjbUkYVs6UpoEYkqG6FvfCGo+rTyV9lJS7V9CPGhVIWI8Dky5sech+xc828lE7Xjhon3ygwO7llnAK8e9Ct0wnuItwE42tZjPep2DFLogUfxO0X1bXAImeJBES4RivQ2C8mkkNENFyZMQjtAOAa7FiMB5i7ZAJtSibKq/lcT8w4uXQve7S+81r198o8zsdRG11UHNWkW26jS7La971W5QrcHQ9vK03BE/b5n5ctDugxSTU7rGjxM1cA5H1zVuRXcwf1KomI5+h2i3xU/zpFRIFZ/o3lSiNU6jmGl3kMRGc1yB+KpHuO1UnAeZ6tDOjkUeGgGaSAT/boFdrfHWCwuI6ixpsCQCgRvv+Lc+HKnuibn20HeIjZ2Dyir4rZ8Ap6sUSwcd0HFsqDyGROjhQA2eJE8A7xnm/5cXAupmWSu/DLTVtXWp04yrOtccxHgFEG5ARAe6tortm70ZAvpCIfPszr58JYed/edZVQm/pS3352/7o8p72MP5ZU3MSfU=
