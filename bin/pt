@@ -1,0 +1,3 @@
+#!/bin/sh
+
+(cd /ProfitTrailer; java -jar ./ProfitTrailer.jar -XX:+UseConcMarkSweepGC -Xmx256m -Xms256m)
