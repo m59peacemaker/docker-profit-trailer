@@ -7,4 +7,4 @@ mkdir -p dist
 # build and/or copy relevant files into dist/
 cp .travis.yml dist/
 cp Dockerfile dist/
-cp bin dist/
+cp -r bin dist/
