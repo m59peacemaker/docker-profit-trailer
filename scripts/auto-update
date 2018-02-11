@@ -9,7 +9,7 @@ LATEST_VERSION="$(./scripts/latest-version)"
 
 git clone --no-checkout https://$GITHUB_TOKEN@github.com/$REPO.git dist
 cd dist
-(git checkout dist --track origin/dist || (git checkout --orphan dist && git rm -rf .))
+(git checkout -b dist --track origin/dist || (git checkout --orphan dist && git rm -rf .))
 
 existing_tag="$(git tag -l "$LATEST_VERSION")"
 
