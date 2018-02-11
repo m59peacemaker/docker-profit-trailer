@@ -6,8 +6,8 @@ mkdir -p dist
 
 # ensure dirty git working directory
 echo "$TRAVIS_BUILD_NUMBER" > dist/build_number
+cp .travis.yml dist/
 
 # build and/or copy relevant files into dist/
-cp .travis.yml dist/
 cp -r bin dist/
 sed "s/{PT_VERSION}/$VERSION/" Dockerfile.template > dist/Dockerfile
