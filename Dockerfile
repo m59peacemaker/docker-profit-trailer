@@ -12,26 +12,29 @@ RUN \
   (cd ProfitTrailer; rm pm2-ProfitTrailer.json Run-ProfitTrailer.cmd) && \
   mv ProfitTrailer /
 
+
+
 FROM alpine:3.7
 
 ENV PT_VERSION $PT_VERSION
 
 COPY --from=gh-deps /ProfitTrailer /ProfitTrailer
 
+COPY bin/pt /usr/local/bin/pt
+COPY bin/startup /usr/local/bin/startup
+
 RUN apk add --update --no-cache openjdk8
+
+RUN mkdir -p /config /logs /data
 
 RUN \
   addgroup -g 1000 pt && \
   adduser -D -s /bin/sh -G pt -u 1000 ptuser
 
-COPY bin/pt /usr/local/bin/pt
-COPY bin/startup /usr/local/bin/startup
-
-RUN mkdir -p /ProfitTrailer /config /data
-
-RUN chown -R ptuser:pt /ProfitTrailer /config /data
+RUN chown -R ptuser:pt /ProfitTrailer /config /logs /data
 
 VOLUME /config
+VOLUME /logs
 VOLUME /data
 
 EXPOSE 8081
