@@ -4,6 +4,9 @@ VERSION="$1"
 
 mkdir -p dist
 
+# ensure dirty git working directory
+echo "$TRAVIS_BUILD_NUMBER" > dist/build_number
+
 # build and/or copy relevant files into dist/
 cp .travis.yml dist/
 cp -r bin dist/
