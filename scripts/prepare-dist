@@ -6,5 +6,5 @@ mkdir -p dist
 
 # build and/or copy relevant files into dist/
 cp .travis.yml dist/
-cp Dockerfile dist/
 cp -r bin dist/
+sed "s/{PT_VERSION}/$VERSION/" Dockerfile.template > dist/Dockerfile

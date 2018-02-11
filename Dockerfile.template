@@ -1,6 +1,6 @@
 FROM alpine:3.7 as gh-deps
 
-ARG PT_VERSION
+ARG {PT_VERSION}
 
 WORKDIR /tmp
 
