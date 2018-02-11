@@ -25,9 +25,14 @@ if [ "$should_build" = "true" ]; then
   git config user.email "travis@travis-ci.org"
   git config user.name "Travis CI"
 
+  if [ ! -z "$existing_tag" ]; then
+    git tag -d "$LATEST_VERSION"
+    git push --delete origin "$LATEST_VERSION"
+  fi
+
+
   git add .
   git commit -m "$LATEST_VERSION"
-  git tag -f -a "$LATEST_VERSION" -m "$LATEST_VERSION"
-
-  git push -f --follow-tags -u origin dist
+  git tag -a "$LATEST_VERSION" -m "$LATEST_VERSION"
+  git push --follow-tags -u origin dist
 fi
