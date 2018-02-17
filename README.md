@@ -17,9 +17,17 @@ pmkr/profit-trailer
 
 ## volumes
 
-### /config
+### `/appdata/config`
 
-Mount the config directory containing `application.properties`, `configuration.properties`, and `trading` here.
+Mount the config directory containing `application.properties`, `configuration.properties`, and `trading/` here.
+
+### `/appdata/data`
+
+Mount the directory containing ProfitTrailerData.json, ProfitTrailerData.json.backup, and `backup/` here.
+
+### `/appdata/logs`
+
+Mount the directory for Profit Trailer logs here.
 
 ## ports
 
