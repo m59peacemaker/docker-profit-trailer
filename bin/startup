@@ -1,28 +1,31 @@
 #!/bin/sh
 
+APP="/ProfitTrailer"
+APPDATA="/appdata"
+CONFIG="$APPDATA/config"
+TRADING="$CONFIG/trading"
+DATA="$APPDATA/data"
+LOGS="$APPDATA/logs"
+
 files="application.properties configuration.properties"
 for file in $files; do
-  if [ -f "/config/$file" ]; then
-    ln -sf "/config/$file" "/ProfitTrailer/$file"
+  if [ -f "$CONFIG/$file" ]; then
+    ln -sf "$CONFIG/$file" "$APP/$file"
   else
-    echo "$file not found in /config" 1>&2
+    echo "$file not found in $CONFIG" 1>&2
     exit 1
   fi
 done
 
-if [ -d /config/trading ]; then
-  rm -r /ProfitTrailer/trading
-  ln -s /config/trading /ProfitTrailer/trading
-fi
+mkdir -p "$TRADING"
+rm -r "$APP/trading"
+ln -s "$TRADING" "$APP/trading"
 
-mkdir -p /data/logs /data/backup
-touch /data/logs/ProfitTrailer.log
-touch /data/ProfitTrailerData.json
-touch /data/ProfitTrailerData.json.backup
+ln -s "$LOGS" "$APP/logs"
 
-files="ProfitTrailerData.json ProfitTrailer.json.backup logs backup"
-for file in $files; do
-  ln -sf "/data/$file" "/ProfitTrailer/$file"
+datapaths="ProfitTrailerData.json ProfitTrailerData.json.backup backup"
+for datapath in $datapaths; do
+  ln -s "$APPDATA/$datapath" "$APP/$datapath"
 done
 
-pt
+exec pt

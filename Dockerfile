@@ -1,6 +1,6 @@
 FROM alpine:3.7 as gh-deps
 
-ENV PT_VERSION 1.2.6.17
+ENV PT_VERSION 1.2.6.16
 
 WORKDIR /tmp
 
@@ -14,7 +14,7 @@ RUN \
 
 
 
-FROM alpine:3.7
+FROM openjdk:8-jre-alpine
 
 ENV PT_VERSION $PT_VERSION
 
@@ -23,23 +23,25 @@ COPY --from=gh-deps /ProfitTrailer /ProfitTrailer
 COPY bin/pt /usr/local/bin/pt
 COPY bin/startup /usr/local/bin/startup
 
-RUN apk add --update --no-cache openjdk8
-
-RUN mkdir -p /config /logs /data
+RUN mkdir -p /appdata/config /appdata/data /appdata/logs
+RUN touch \
+  /appdata/ProfitTrailerData.json \
+  /appdata/ProfitTrailerData.json.backup \
+  /appdata/logs/ProfitTrailer.log
 
 RUN \
   addgroup -g 1000 pt && \
   adduser -D -s /bin/sh -G pt -u 1000 ptuser
 
-RUN chown -R ptuser:pt /ProfitTrailer /config /logs /data
+RUN chown -R ptuser:pt /ProfitTrailer /appdata
 
-VOLUME /config
-VOLUME /logs
-VOLUME /data
+VOLUME /appdata/config
+VOLUME /appdata/data
+VOLUME /appdata/logs
 
 EXPOSE 8081
 
 USER ptuser
 WORKDIR /config
 
-CMD ["startup"]
+CMD [ "startup" ]
