@@ -1,18 +1,24 @@
-#!/bin/sh
-
-set -e
+#!/bin/sh -e
 
 VERSION="$1"
 
-if [ -z "$(git config user.name)" ]; then git config user.name "$GIT_USER_NAME"; fi
-if [ -z "$(git config user.email)" ]; then git config user.email "$GIT_USER_EMAIL"; fi
+. ./scripts/vars
+
+(cd ./dist \
+  && if test -z "$(git config user.name)"; then git config user.name "$GIT_USER_NAME"; fi \
+  && if test -z "$(git config user.email)"; then git config user.email "$GIT_USER_EMAIL"; fi \
+)
 
 if test "$(./scripts/dist-has-tag "$VERSION")" = "true"; then
-  git tag -d "$VERSION"
-  git push --delete origin "$VERSION"
+  (cd ./dist \
+    && git tag -d "$VERSION" \
+    && git push --delete origin "$VERSION" \
+  )
 fi
 
-git add .
-git commit -m "$VERSION"
-git tag -a "$VERSION" -m "$VERSION"
-git push --follow-tags -u origin dist
+(cd ./dist \
+  && git add . \
+  && git commit -m "$VERSION" \
+  && git tag -a "$VERSION" -m "$VERSION" \
+  && git push --follow-tags -u origin dist \
+)

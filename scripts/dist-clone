@@ -1,15 +1,16 @@
-#!/bin/sh
+#!/bin/sh -e
 
 . ./scripts/vars
 
-if [ -d ./dist ]; then
+if test -d ./dist; then
   echo "./dist already exists. Remove it first." >> /dev/stderr
   exit 1;
 fi
 
-git clone --no-checkout "https://$GITHUB_TOKEN@github.com/$REPO.git" dist
+URL="https://$GITHUB_TOKEN@github.com/$REPO.git"
+if test -z "$GITHUB_TOKEN"; then URL="git@github.com:$REPO.git"; fi
+git clone --no-checkout "$URL" dist
 
-( \
-  cd dist; \
-  (git checkout -b dist --track origin/dist || (git checkout --orphan dist && git rm -rf .)) \
+(cd dist \
+  && (git checkout -b dist --track origin/dist || (git checkout --orphan dist && git rm -rf .)) \
 )

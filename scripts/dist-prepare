@@ -1,11 +1,11 @@
-#!/bin/sh
+#!/bin/sh -e
 
 VERSION="$1"
 
 mkdir -p dist
 
 # ensure dirty git working directory
-echo "$TRAVIS_BUILD_NUMBER" > dist/build_number
+echo "$(date) Travis: $TRAVIS_BUILD_NUMBER" > dist/build_number
 cp .travis.yml dist/
 
 # build and/or copy relevant files into dist/

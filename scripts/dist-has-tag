@@ -1,13 +1,13 @@
-#!/bin/sh
+#!/bin/sh -e
 
 SUBJECT_TAG="$1"
 
-if [ ! -d "./dist" ]; then
+if test ! -d "./dist"; then
   echo "./dist has not been cloned yet. Clone it with `./scripts/dist-clone`." >> /dev/stderr
   exit 1;
 fi
 
 has_tag="false"
-if [ ! -z "$(cd ./dist; git tag -l "$SUBJECT_TAG")" ]; then has_tag="true"; fi
+if test ! -z "$(cd ./dist; git tag -l "$SUBJECT_TAG")"; then has_tag="true"; fi
 
 printf "$has_tag"
