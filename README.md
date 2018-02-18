@@ -31,7 +31,7 @@ Mount the directory for Profit Trailer logs here.
 
 ## ports
 
-### 8081
+### `8081`
 
 The web server binds to port 8081.
 
