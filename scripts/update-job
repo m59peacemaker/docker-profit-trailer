@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# exit on any errors
+set -e
+
+. ./scripts/vars
+
+./scripts/dist-clone
+
+LATEST_VERSION="$(./scripts/source-latest-version)"
+
+# don't build in cron job when there's already a build for this version
+if (test "$TRAVIS_EVENT_TYPE" = "cron" && test "$(./scripts/dist-has-tag "$LATEST_VERSION")" = "true"); then
+  "already up to date with source repo. skipping build."
+else
+  ./scripts/dist-prepare "$LATEST_VERSION"
+  ./scripts/dist-publish"$LATEST_VERSION"
+fi

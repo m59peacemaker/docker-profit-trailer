@@ -1,0 +1,9 @@
+#!/bin/sh
+
+. ./scripts/vars
+
+# github repo latest tag
+TAGS="$(curl --location --silent -H "Accept: application/json" "https://api.github.com/repos/$SOURCE/tags")"
+LATEST_VERSION="$(echo "$TAGS" | grep '"name"' | head -1 | sed -e 's/.*\"name\": \"v\([^\"]\+\)\".*/\1/')"
+
+printf "$LATEST_VERSION"

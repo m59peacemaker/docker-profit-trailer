@@ -1,0 +1,14 @@
+#!/bin/sh
+
+. ./scripts/vars
+
+VERSION="$1"
+
+if test -z "$VERSION"; then
+  echo "enter a version number" >> /dev/stderr
+  exit 1
+fi
+
+./scripts/dist-prepare "$VERSION"
+(cd dist && docker build -t "$IMAGE:latest" -t "$IMAGE:$VERSION" .)
+rm -rf ./dist

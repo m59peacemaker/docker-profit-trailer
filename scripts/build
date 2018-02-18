@@ -1,8 +1,0 @@
-#!/bin/sh
-
-. ./scripts/vars
-
-VERSION="$1"
-
-./scripts/prepare-dist "$VERSION"
-(cd dist && docker build -t "$IMAGE:latest" -t "$IMAGE:$VERSION" .)

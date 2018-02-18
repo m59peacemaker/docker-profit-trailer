@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# exit on any errors
+set -e
+
+. ./scripts/vars
+
+VERSION="$1"
+
+if test -z "$VERSION"; then
+  echo "enter a version number" >> /dev/stderr
+  exit 1
+fi
+
+./scripts/dist-clone
+
+./scripts/dist-prepare "$VERSION"
+./scripts/dist-publish "$VERSION"
+
+rm -rf ./dist
