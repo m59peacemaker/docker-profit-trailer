@@ -19,15 +19,10 @@ FROM openjdk:8-jre-alpine
 ENV PT_VERSION $PT_VERSION
 
 COPY --from=gh-deps /ProfitTrailer /ProfitTrailer
-
-COPY bin/pt /usr/local/bin/pt
-COPY bin/startup /usr/local/bin/startup
+COPY ./bin /usr/local/bin
+COPY ./lib /usr/local/lib/pt
 
 RUN mkdir -p /appdata/config /appdata/data /appdata/logs
-RUN touch \
-  /appdata/ProfitTrailerData.json \
-  /appdata/ProfitTrailerData.json.backup \
-  /appdata/logs/ProfitTrailer.log
 
 RUN \
   addgroup -g 1000 pt && \
