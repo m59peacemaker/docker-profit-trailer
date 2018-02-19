@@ -25,7 +25,8 @@ ln -s "$LOGS" "$APP/logs"
 
 datapaths="ProfitTrailerData.json ProfitTrailerData.json.backup backup"
 for datapath in $datapaths; do
-  ln -s "$APPDATA/$datapath" "$APP/$datapath"
+  touch "$DATA/$datapath"
+  ln -s "$DATA/$datapath" "$APP/$datapath"
 done
 
 exec pt
