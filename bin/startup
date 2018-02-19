@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 APP="/ProfitTrailer"
 APPDATA="/appdata"
@@ -21,12 +21,19 @@ mkdir -p "$TRADING"
 rm -r "$APP/trading"
 ln -s "$TRADING" "$APP/trading"
 
+mkdir -p "$LOGS"
 ln -s "$LOGS" "$APP/logs"
 
-datapaths="ProfitTrailerData.json ProfitTrailerData.json.backup backup"
-for datapath in $datapaths; do
-  touch "$DATA/$datapath"
-  ln -s "$DATA/$datapath" "$APP/$datapath"
+mkdir -p $DATA/backup
+ln -s "$DATA/backup" "$APP/backup"
+
+datafiles="ProfitTrailerData.json ProfitTrailerData.json.backup"
+for datafile in $datafiles; do
+  path="$DATA/$datafile"
+  if test ! -f "$path"; then
+    cp "/usr/local/lib/pt/$datafile" "$path"
+  fi
+  ln -s "$path" "$APP/$datapath"
 done
 
 exec pt
