@@ -17,7 +17,10 @@ for file in $files; do
   fi
 done
 
-mkdir -p "$TRADING"
+if test ! -d "$TRADING"; then
+  cp -r "$APP/trading" "$TRADING"
+  cp "/usr/local/lib/pt/ineffectual.PAIRS.properties" "$TRADING/PAIRS.properties"
+fi
 rm -r "$APP/trading"
 ln -s "$TRADING" "$APP/trading"
 
