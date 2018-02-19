@@ -5,6 +5,10 @@
 ./scripts/dist-clone
 
 LATEST_VERSION="$(./scripts/source-latest-version)"
+if test -z "$LATEST_VERSION"; then
+  echo "could not determine latest version" >&2
+  exit 1
+fi
 echo "Latest version of $SOURCE is $LATEST_VERSION"
 
 # don't build in cron job when there's already a build for this version
