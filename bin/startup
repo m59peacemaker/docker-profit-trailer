@@ -23,7 +23,10 @@ ln -s "$TRADING" "$APP/trading"
 
 ln -s "$LOGS" "$APP/logs"
 
-datapaths="ProfitTrailerData.json ProfitTrailerData.json.backup backup"
+mkdir -p $DATA/backup
+ln -s "$DATA/backup" "$APP/backup"
+
+datapaths="ProfitTrailerData.json ProfitTrailerData.json.backup"
 for datapath in $datapaths; do
   touch "$DATA/$datapath"
   ln -s "$DATA/$datapath" "$APP/$datapath"
