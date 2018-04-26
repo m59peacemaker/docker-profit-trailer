@@ -1,6 +1,6 @@
 FROM alpine:3.7 as gh-deps
 
-ENV PT_VERSION 1.2.6.25
+ENV PT_VERSION 2.0.1
 
 WORKDIR /tmp
 
